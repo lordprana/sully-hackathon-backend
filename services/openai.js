@@ -24,9 +24,10 @@ const TranslationObjectSchema = z.object({
 });
 
 const translateAndExtractMetadata = async (string, languageCode, targetLanguage, fullConversation) => {
-  if (languageCode === 'en-US' && targetLanguage) {
+  if (languageCode === 'en-us' && targetLanguage) {
     string = `Translate to ${targetLanguage}. ${string}`
   }
+  console.log(string)
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-mini",
     messages: [

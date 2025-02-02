@@ -22,6 +22,7 @@ wss.on('connection', (ws) => {
   // const writeStream = fs.createWriteStream(AUDIO_FILE_PATH);
 
   ws.on('message', async (message) => {
+    console.log(cachedData.targetLanguage)
     if (message.toString() === 'END') {
       console.log('Received END signal. Sending file to Google STT...')
       return
@@ -53,11 +54,13 @@ wss.on('connection', (ws) => {
       translation: translationAndMetadata.translation,
     })
 
-    if (languageCode !== 'en-US' && !cachedData.targetLanguage) {
+    if (languageCode !== 'en-us' && !cachedData.targetLanguage) {
       cachedData['targetLanguage'] = languageCode
+      console.log('here 1')
     }
     if (translationAndMetadata.targetLanguage !== 'en-US' && !cachedData.targetLanguage) {
       cachedData['targetLanguage'] = translationAndMetadata.targetLanguage
+      console.log('here 2')
     }
 
     const audioBuffer = await generateTTS(translationAndMetadata.translation)
